@@ -160,9 +160,3 @@ Ini memastikan data yang ditampilkan selalu **up-to-date**.
 2. **POST** `/admin/create` — Buat admin baru:
    - Console menampilkan `Cache INVALIDATED: admin:*`
    - GET berikutnya akan `Cache MISS` (data fresh dari DB)
-
-Dapatkan Redis Cloud gratis di [redis.io/cloud](https://redis.io/cloud/).
-
-## 📝 Lisensi
-
-ISC
