@@ -32,7 +32,7 @@ export const getAllAdmin = async (req, res) => {
       data: admin,
     };
     await setCache("admin:all", response); // Simpan ke cache
-    res.status(200).json(   );
+    res.status(200).json(response);
   } catch (error) {
     res.status(404).json({ message: "gagal mendapatkan data admin" });
   }
