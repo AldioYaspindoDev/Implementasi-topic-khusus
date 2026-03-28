@@ -18,7 +18,7 @@ const AdminSchema = mongoose.Schema({
         type: String,
         required: [true, 'password wajib diisi'],
         trim: true,
-        select: false,
+        // select: false,
     },
 
     imageAdmin: {

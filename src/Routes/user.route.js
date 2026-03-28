@@ -4,7 +4,8 @@ import {
     getUserById,
     createUser,
     updatedUser,
-    login
+    login,
+    deleteUser
  } from "../Controllers/user.controller.js";
 
 
@@ -15,3 +16,4 @@ UserRoute.get("/:id", getUserById);
 UserRoute.post("/create", createUser);
 UserRoute.post("/login", login);
 UserRoute.patch("/update/:id", updatedUser);
+UserRoute.delete("/delete/:id", deleteUser);

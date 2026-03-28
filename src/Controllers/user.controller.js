@@ -143,3 +143,20 @@ export const login = async (req, res) => {
         res.status(400).json({message: "gagal login"});
     }
 }
+
+export const deleteUser = async (req, res) => {
+    try {
+        const {id} = req.params;
+
+        const user = await UserSchema.findByIdAndDelete(id);
+
+        const response = {
+            message : "berhasil hapus data",
+            data: user
+        }
+
+        res.status(200).json(response);
+    } catch (error) {
+        res,status(500).json({ message: "berhasil hapus data" });
+    }
+}

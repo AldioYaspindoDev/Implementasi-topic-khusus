@@ -1,6 +1,7 @@
 import AdminSchema from "../Model/admin.model.js";
 import { setCache, deleteCache } from "../middleware/redisCache.js";
 import argon2 from "argon2";
+import jwt from "jsonwebtoken";
 
 export const createAdmin = async (req, res) => {
   try {
@@ -76,6 +77,52 @@ export const updateAdmin = async (req, res) => {
     res.status(500).json({ message: "gagal mengupdate" });
   }
 };
+
+
+export const loginAdmin = async (req, res) => {
+  try {
+      const {emailAdmin, passwordAdmin} = req.body;
+      if(!emailAdmin || !passwordAdmin){
+        return res.status(400).json({
+          message: "email dan password tidak ditemukan"
+        });
+      }
+      
+      const admin = await AdminSchema.findOne({ emailAdmin });
+      
+      if(!admin){
+        return res.status(404).json({ message: "email salah" });
+      }
+      console.log(admin.passwordAdmin);
+
+      const isPasswordMatch = await argon2.verify(admin.passwordAdmin, passwordAdmin);
+
+      if(!isPasswordMatch){
+        return res.status(404).json({ message: "password salah" });
+      }
+
+      const token = jwt.sign(
+      {
+        id: admin._id,
+        email: admin.emailAdmin
+      },
+      process.env.JWT_KEY, {
+        expiresIn: "15m"
+      }
+    );
+
+    const response = {
+      message: "berhasil login",
+      token: token
+    }
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("error : ", error.message);
+    res.status(500).json({ message: "gagal login" });    
+  }
+}
+
 
 export const deleteAdmin = async (req, res) => {
   try {
